@@ -5,14 +5,18 @@ import { ThemeContext } from '../context/ThemeContext';
 import { ChefHat, Utensils, Check, Camera, Book, Filter, Star, Heart, Loader2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { Clock, Youtube } from 'lucide-react';
+
 const HomePage = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [ingredients, setIngredients] = useState([]);
     const [inputIngredient, setInputIngredient] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedRecipes, setGeneratedRecipes] = useState([]);
-    const [dietPreference, setDietPreference] = useState('both'); // 'veg', 'non-veg', 'both'
+    const [dietPreference, setDietPreference] = useState('veg'); // 'veg', 'non-veg', 'both'
+    const [activeTab, setActiveTab] = useState({});
 
+    const API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY || 'YOUR_FREE_API_KEY';
+    console.log(API_KEY)
     // Function to handle Get Started button click
     const handleGetStarted = () => {
         Swal.fire({
@@ -24,7 +28,28 @@ const HomePage = () => {
             color: isDarkMode ? '#ffffff' : '#333333',
         });
     };
+    const handleTabChange = (recipeIndex, tabName) => {
+        setActiveTab(prev => ({
+            ...prev,
+            [recipeIndex]: tabName
+        }));
+    };
+    const [cuisineOptions, setCuisineOptions] = useState([
+        { id: 'indian', name: 'Indian', selected: false },
+        { id: 'italian', name: 'Italian', selected: false },
+        { id: 'chinese', name: 'Chinese', selected: false },
+        { id: 'mexican', name: 'Mexican', selected: false },
+        { id: 'american', name: 'American', selected: false },
+        { id: 'mediterranean', name: 'Mediterranean', selected: false },
+        { id: 'thai', name: 'Thai', selected: false },
+        { id: 'french', name: 'French', selected: false },
+    ]);
 
+    const toggleCuisine = (id) => {
+        setCuisineOptions(cuisineOptions.map(cuisine =>
+            cuisine.id === id ? { ...cuisine, selected: !cuisine.selected } : cuisine
+        ));
+    };
     // Add ingredient to list
     const addIngredient = () => {
         if (inputIngredient.trim() && !ingredients.includes(inputIngredient.trim().toLowerCase())) {
@@ -45,67 +70,82 @@ const HomePage = () => {
         setGeneratedRecipes([]);
 
         try {
+            // Get selected cuisines (if none selected, we'll use all)
+            const selectedCuisines = cuisineOptions
+                .filter(c => c.selected)
+                .map(c => c.id)
+                .join(',');
+
+            // Prepare diet parameters based on preference
+            let dietParams = '';
+            if (dietPreference === 'veg') {
+                dietParams = 'vegetarian=true&vegan=false';
+            } else if (dietPreference === 'non-veg') {
+                dietParams = 'vegetarian=false&vegan=false';
+            }
+
+            // Prepare ingredients string
+            const ingredientsString = ingredients.join(',');
+
+            // Make API request to Spoonacular
             const response = await fetch(
-                `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredients[0]}`
+                `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${API_KEY || 'YOUR_FREE_API_KEY'}&ingredients=${ingredientsString}&number=5&${dietParams}${selectedCuisines ? `&cuisine=${selectedCuisines}` : ''}`
             );
 
             if (!response.ok) throw new Error('API request failed');
 
-            const data = await response.json();
+            const recipes = await response.json();
 
-            if (data.meals && data.meals.length > 0) {
-                const recipeDetails = await Promise.all(
-                    data.meals.slice(0, 5).map(meal =>
-                        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`)
+            if (recipes && recipes.length > 0) {
+                // Fetch detailed information for each recipe
+                const detailedRecipes = await Promise.all(
+                    recipes.map(recipe =>
+                        fetch(`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${API_KEY || 'YOUR_FREE_API_KEY'}`)
                             .then(res => res.json())
                     )
                 );
 
-                const recipes = recipeDetails
-                    .map(detail => {
-                        const recipe = detail.meals[0];
+                // Format the recipes data
+                const formattedRecipes = detailedRecipes.map(recipe => {
+                    // Extract ingredients
+                    const ingredientsList = recipe.extendedIngredients.map(ing =>
+                        `${ing.amount} ${ing.unit} ${ing.name}`
+                    );
 
-                        // Check if recipe matches diet preference
-                        const isVeg = !recipe.strMeal.toLowerCase().includes('chicken') &&
-                            !recipe.strMeal.toLowerCase().includes('beef') &&
-                            !recipe.strMeal.toLowerCase().includes('pork') &&
-                            !recipe.strMeal.toLowerCase().includes('fish') &&
-                            !recipe.strMeal.toLowerCase().includes('meat');
+                    // Extract instructions
+                    let steps = [];
+                    if (recipe.analyzedInstructions && recipe.analyzedInstructions.length > 0) {
+                        steps = recipe.analyzedInstructions[0].steps.map(step => step.step);
+                    } else if (recipe.instructions) {
+                        steps = recipe.instructions.split('\n').filter(step => step.trim());
+                    }
 
-                        // Extract ingredients
-                        const ingredientsList = [];
-                        for (let i = 1; i <= 20; i++) {
-                            const ingredient = recipe[`strIngredient${i}`];
-                            const measure = recipe[`strMeasure${i}`];
-                            if (ingredient && ingredient.trim() !== '') {
-                                ingredientsList.push(`${measure || ''} ${ingredient}`.trim());
-                            }
-                        }
+                    // Construct proper image URL
+                    let imageUrl = recipe.image;
+                    if (!imageUrl) {
+                        // Fallback image
+                        imageUrl = isVeg
+                            ? 'https://spoonacular.com/recipeImages/vegetarian-placeholder.jpg'
+                            : 'https://spoonacular.com/recipeImages/non-vegetarian-placeholder.jpg';
+                    } else if (!imageUrl.startsWith('http')) {
+                        // Some Spoonacular image URLs might be relative
+                        imageUrl = `https://spoonacular.com/recipeImages/${imageUrl}`;
+                    }
 
-                        return {
-                            title: recipe.strMeal,
-                            ingredients: ingredientsList,
-                            steps: recipe.strInstructions.split('\r\n').filter(step => step.trim()),
-                            time: '30 mins',
-                            image: recipe.strMealThumb,
-                            video: recipe.strYoutube,
-                            isVegetarian: isVeg
-                        };
-                    })
-                    // Filter based on diet preference
-                    .filter(recipe => {
-                        if (dietPreference === 'both') return true;
-                        if (dietPreference === 'veg') return recipe.isVegetarian;
-                        if (dietPreference === 'non-veg') return !recipe.isVegetarian;
-                        return true;
-                    })
-                    .slice(0, 3); // Limit to 3 recipes
+                    return {
+                        title: recipe.title,
+                        ingredients: ingredientsList,
+                        steps: steps,
+                        time: `${recipe.readyInMinutes} mins`,
+                        image: imageUrl, // Use the properly constructed URL
+                        video: recipe.sourceUrl,
+                        isVegetarian: recipe.vegetarian || false,
+                        sourceUrl: recipe.sourceUrl
+                    };
+                });
 
-                if (recipes.length > 0) {
-                    setGeneratedRecipes(recipes);
-                } else {
-                    createMockRecipe();
-                }
+
+                setGeneratedRecipes(formattedRecipes);
             } else {
                 createMockRecipe();
             }
@@ -116,16 +156,23 @@ const HomePage = () => {
             setIsGenerating(false);
         }
     };
-    // Mock recipe generator
+
+    // Updated mock recipe generator with cuisine support
     const createMockRecipe = () => {
         const isVeg = dietPreference === 'veg' ||
             (dietPreference === 'both' && Math.random() > 0.5);
+
+        // Get selected cuisines or use a random one if none selected
+        const selectedCuisines = cuisineOptions.filter(c => c.selected);
+        const cuisine = selectedCuisines.length > 0
+            ? selectedCuisines[Math.floor(Math.random() * selectedCuisines.length)].name
+            : 'International';
 
         const protein = isVeg ? 'tofu' : 'chicken';
         const mockIngredients = [...ingredients, protein, 'spices', 'oil'];
 
         const mockRecipes = [{
-            title: `${isVeg ? 'Vegetarian' : 'Non-Vegetarian'} ${ingredients[0]} Dish`,
+            title: `${cuisine} ${isVeg ? 'Vegetarian' : ''} ${ingredients[0]} Dish`,
             ingredients: mockIngredients.map(ing => `1 cup ${ing}`),
             steps: [
                 `Prepare all ${mockIngredients.length} ingredients`,
@@ -138,13 +185,15 @@ const HomePage = () => {
             ],
             time: '25 mins',
             image: isVeg
-                ? 'https://www.themealdb.com/images/media/meals/xxyupu1468262513.jpg'
-                : 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-            isVegetarian: isVeg
+                ? 'https://spoonacular.com/recipeImages/vegetarian-placeholder.jpg'
+                : 'https://spoonacular.com/recipeImages/non-vegetarian-placeholder.jpg',
+            isVegetarian: isVeg,
+            sourceUrl: '#'
         }];
 
         setGeneratedRecipes(mockRecipes);
     };
+
 
     // Fallback recipe generator
 
@@ -272,7 +321,6 @@ const HomePage = () => {
             }
         }
     };
-
     return (
         <div className={`homepage-container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
             {/* Hero Section (existing code remains the same) */}
@@ -356,20 +404,38 @@ const HomePage = () => {
 
             {/* Interactive Ingredients Section */}
             <section className="homepage-ingredients-section">
-                <h2 className="homepage-section-title">Add Your Ingredients</h2>
-                <div className="diet-filter">
-                    <label>Diet Preference:</label>
-                    <select
-                        value={dietPreference}
-                        onChange={(e) => setDietPreference(e.target.value)}
-                    >
-                        <option value="both">Both Vegetarian & Non-Veg</option>
-                        <option value="veg">Vegetarian Only</option>
-                        <option value="non-veg">Non-Vegetarian Only</option>
-                    </select>
-                </div>
-                <div className="homepage-ingredients-input">
+                <h2 className="homepage-section-title">Add Your Ingredients  </h2>
+                <div className="preference-filters">
+                    <div className="diet-filter">
+                        <label>Diet Preference:</label>
+                        <select
+                            value={dietPreference}
+                            onChange={(e) => setDietPreference(e.target.value)}
+                        >
+                            <option value="both">Both Vegetarian & Non-Veg</option>
+                            <option value="veg">Vegetarian Only</option>
+                            <option value="non-veg">Non-Vegetarian Only</option>
+                        </select>
+                    </div>
 
+                    <div className="cuisine-filter">
+                        <label>Cuisine Preferences:</label>
+                        <div className="cuisine-checkboxes">
+                            {cuisineOptions.map((cuisine) => (
+                                <label key={cuisine.id} className="cuisine-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={cuisine.selected}
+                                        onChange={() => toggleCuisine(cuisine.id)}
+                                    />
+                                    {cuisine.name}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="homepage-ingredients-input">
                     <input
                         type="text"
                         value={inputIngredient}
@@ -414,39 +480,76 @@ const HomePage = () => {
                     <h2 className="homepage-section-title">AI-Generated Recipes</h2>
                     <div className="recipes-grid">
                         {generatedRecipes.map((recipe, index) => (
-                            <div className="recipe-card">
+                            <div className="apt-recipe-card" key={index}>
                                 {recipe.image && (
-                                    <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+                                    <div className="apt-recipe-image-container">
+                                        <img
+                                            src={recipe.image}
+                                            alt={recipe.title}
+                                            className="apt-recipe-image"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "https://spoonacular.com/recipeImages/placeholder.png"
+                                            }}
+                                        />
+                                        {recipe.video && (
+                                            <a href={recipe.video} target="_blank" rel="noopener" className="apt-recipe-video-btn">
+                                                <i className="fas fa-play-circle"></i>
+                                            </a>
+                                        )}
+                                    </div>
                                 )}
-                                <h3>{recipe.title}</h3>
+                                <div className="apt-recipe-content">
+                                    <h3 className="apt-recipe-title">{recipe.title}</h3>
 
-                                <div className="recipe-meta">
-                                    <span className="recipe-time">
-                                        <Clock size={16} /> {recipe.time}
-                                    </span>
-                                    {recipe.video && (
-                                        <a href={recipe.video} target="_blank" rel="noopener" className="recipe-video">
-                                            <Youtube size={16} /> Watch Video
-                                        </a>
-                                    )}
-                                </div>
+                                    <div className="apt-recipe-meta">
+                                        <span className="apt-recipe-time">
+                                            <i className="far fa-clock"></i> {recipe.time}
+                                        </span>
+                                        <span className="apt-recipe-difficulty">
+                                            <i className="fas fa-chart-line"></i> Medium
+                                        </span>
+                                        <span className="apt-recipe-servings">
+                                            <i className="fas fa-utensils"></i> 4 servings
+                                        </span>
+                                    </div>
 
-                                <div className="recipe-ingredients">
-                                    <h4>Ingredients:</h4>
-                                    <ul>
-                                        {recipe.ingredients.map((ing, i) => (
-                                            <li key={i}>{ing}</li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                    <div className="apt-recipe-details">
+                                        <div
+                                            className={`apt-recipe-tab ${activeTab[index] !== 'instructions' ? 'apt-recipe-tab-active' : ''}`}
+                                            onClick={() => handleTabChange(index, 'ingredients')}
+                                        >
+                                            <i className="fas fa-list"></i> Ingredients
+                                        </div>
+                                        <div
+                                            className={`apt-recipe-tab ${activeTab[index] === 'instructions' ? 'apt-recipe-tab-active' : ''}`}
+                                            onClick={() => handleTabChange(index, 'instructions')}
+                                        >
+                                            <i className="far fa-tasks"></i> Instructions
+                                        </div>
+                                    </div>
 
-                                <div className="recipe-steps">
-                                    <h4>Instructions:</h4>
-                                    <ol>
-                                        {recipe.steps.map((step, i) => (
-                                            <li key={i}>{step}</li>
-                                        ))}
-                                    </ol>
+                                    <div className={`apt-recipe-panel ${activeTab[index] !== 'instructions' ? 'apt-recipe-panel-active' : ''}`}>
+                                        <ul className="apt-ingredients-list">
+                                            {recipe.ingredients.map((ing, i) => (
+                                                <li key={i} className="apt-ingredient-item">
+                                                    <i className="fas fa-check-circle"></i>
+                                                    <span>{ing}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    <div className={`apt-recipe-panel ${activeTab[index] === 'instructions' ? 'apt-recipe-panel-active' : ''}`}>
+                                        <ol className="apt-instructions-list">
+                                            {recipe.steps.map((step, i) => (
+                                                <li key={i} className="apt-instruction-item">
+                                                    <span className="apt-step-number">{i + 1}</span>
+                                                    <p>{step}</p>
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </div>
                                 </div>
                             </div>
                         ))}

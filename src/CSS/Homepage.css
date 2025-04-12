@@ -771,63 +771,291 @@ section {
   margin: 2rem auto 0;
 }
 
-.recipe-card {
-  background-color: var(--card-bg);
-  border-radius: 12px;
+/* Recipe Card - Modern Design */
+.apt-recipe-card {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.apt-recipe-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Image Container and Styling */
+.apt-recipe-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.apt-recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.apt-recipe-image:hover {
+  transform: scale(1.05);
+}
+
+.apt-recipe-card:hover .apt-recipe-image {
+  transform: scale(1.05);
+}
+
+.apt-recipe-video-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  z-index: 2;
+}
+
+.apt-recipe-video-btn:hover {
+  background-color: rgba(255, 59, 48, 0.9);
+}
+
+.apt-recipe-video-btn i {
+  font-size: 18px;
+}
+
+/* Content Area */
+.apt-recipe-content {
   padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.cuisine-filter {
+  margin: 2rem;
+}
+.cuisine-checkboxes {
+  font-size: 1.5rem;
+}
+.cuisine-checkboxes input[type="checkbox"] {
+  transform: scale(1.8); /* Increase the size of the checkbox */
+  margin-right: 10px; /* Space between checkbox and label text */
+  cursor: pointer; /* Change cursor to pointer */
+}
+.cuisine-checkboxes label {
+  margin: 0.5rem;
+}
+.apt-recipe-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: 700;
+  /* color: var(--text-primary, #333333); */
+  line-height: 1.3;
 }
 
-.recipe-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+/* Recipe Meta Information */
+.apt-recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  font-size: clamp(0.8rem, 3vw, 0.9rem);
 }
 
-.recipe-card h3 {
-  margin-bottom: 0.5rem;
-  color: var(--primary-color);
+.apt-recipe-time,
+.apt-recipe-difficulty,
+.apt-recipe-servings {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary, #666666);
 }
 
-.recipe-time {
+.apt-recipe-meta i {
+  margin-right: 6px;
+  color: var(--accent-color, #ff6b6b);
+}
+
+/* Tab Navigation */
+.apt-recipe-details {
+  display: flex;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-color, #f0f0f0);
 }
 
-.recipe-ingredients,
-.recipe-steps {
-  margin-bottom: 1rem;
+.apt-recipe-tab {
+  padding: 0.75rem 0;
+  margin-right: 1.5rem;
+  font-weight: 600;
+  color: var(--text-secondary, #999);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  display: flex;
+  align-items: center;
 }
 
-.recipe-ingredients h4,
-.recipe-steps h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
+.apt-recipe-tab i {
+  margin-right: 8px;
 }
 
-.recipe-ingredients ul,
-.recipe-steps ol {
-  padding-left: 1.2rem;
+.apt-recipe-tab-active {
+  color: var(--accent-color, #ff6b6b);
+}
+
+.apt-recipe-tab-active:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-color, #ff6b6b);
+}
+
+/* Panels for Ingredients and Instructions */
+.apt-recipe-panel {
+  display: none;
+  margin-top: 1rem;
+  animation: fadeIn 0.3s ease;
+  flex: 1;
+}
+
+.apt-recipe-panel-active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ingredients List */
+.apt-ingredients-list {
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
-.recipe-ingredients li,
-.recipe-steps li {
-  margin-bottom: 0.3rem;
-  font-size: 0.9rem;
+.apt-ingredient-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border-color, #f0f0f0);
+  font-size: clamp(0.85rem, 3vw, 0.95rem);
 }
-.recipe-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
+
+.apt-ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.apt-ingredient-item i {
+  color: var(--accent-color, #ff6b6b);
+  margin-right: 10px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Instructions List */
+.apt-instructions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step-counter;
+}
+
+.apt-instruction-item {
+  display: flex;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.apt-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  background-color: var(--accent-color, #ff6b6b);
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.apt-instruction-item p {
+  margin: 0;
+  flex: 1;
+  font-size: clamp(0.85rem, 3vw, 0.95rem);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .apt-recipe-image-container {
+    height: 180px;
+  }
+
+  .apt-recipe-content {
+    padding: 1.25rem;
+  }
+
+  .apt-recipe-tab {
+    margin-right: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .apt-recipe-card {
+    background-color: var(--card-bg, #1e1e1e);
+  }
+
+  .apt-recipe-title {
+    color: var(--text-primary, #f0f0f0);
+  }
+
+  .apt-recipe-meta {
+    color: var(--text-secondary, #b0b0b0);
+  }
+
+  .apt-recipe-tab {
+    color: var(--text-secondary, #888);
+  }
+
+  .apt-ingredient-item {
+    border-bottom-color: var(--border-color, #333);
+  }
+
+  .apt-recipe-details {
+    border-bottom-color: var(--border-color, #333);
+  }
 }
 .diet-filter {
-  margin: 15px 0;
+  margin: 15px auto; /* Change to auto for horizontal centering */
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: center; /* Add this line to center the content */
+  width: fit-content; /* Optional: Adjust width to fit content */
 }
 
 .diet-filter label {
