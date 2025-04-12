@@ -9,10 +9,14 @@ import './App.css'
 import './CSS/Navbar.css';
 import './CSS/Homepage.css';
 import './CSS/Footer.css';
+import './CSS/Signup.css';
+import './CSS/Login.css';
 
 import Navbar from "./Components/NavbarFooter/Navbar"
 import Footer from "./Components/NavbarFooter/Footer"
 import Homepage from "./Pages/Homepage"
+import Signup from "./Pages/Signup"
+import Login from "./Pages/Login"
 
 
 function App() {
@@ -27,6 +31,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
         <Footer />
       </Router>
