@@ -1,0 +1,1362 @@
+/* General Styles */
+.dinner-recipes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.dinner-recipes-container.light-mode {
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+.dinner-recipes-container.dark-mode {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+/* Typography */
+.dinner-recipes-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
+.dinner-recipes-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: inherit;
+}
+
+.dinner-recipes-section-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
+.dinner-recipes-section-description {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  margin-bottom: 2rem;
+  color: inherit;
+}
+
+.dinner-recipes-highlight {
+  color: #ff6b6b;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-highlight {
+  color: #ff8a8a;
+}
+
+/* Hero Section */
+.dinner-recipes-hero {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  border-radius: 12px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  margin-bottom: 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-hero {
+  background: linear-gradient(135deg, #4a11a5 0%, #194b96 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dinner-recipes-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Search Bar */
+.dinner-recipes-search-bar {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-search-bar {
+  background-color: rgba(30, 30, 30, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dinner-recipes-search-icon {
+  color: #666;
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-search-icon {
+  color: #bbb;
+}
+
+.dinner-recipes-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-search-input {
+  color: #e0e0e0;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-search-input::placeholder {
+  color: #888;
+}
+
+.dinner-recipes-filter-button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-filter-button {
+  color: #bbb;
+}
+
+.dinner-recipes-filter-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-filter-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Filters */
+.dinner-recipes-filters {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-filters {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dinner-recipes-filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.dinner-recipes-filter-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: inherit;
+}
+
+.dinner-recipes-time-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dinner-recipes-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #ddd;
+  outline: none;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-slider {
+  background: #444;
+}
+
+.dinner-recipes-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ff6b6b;
+  cursor: pointer;
+}
+
+.dinner-recipes-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ff6b6b;
+  cursor: pointer;
+}
+
+.dinner-recipes-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dinner-recipes-filter-chip {
+  background-color: #f2f2f2;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-filter-chip {
+  background-color: #333;
+}
+
+.dinner-recipes-filter-chip:hover {
+  background-color: #e5e5e5;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-filter-chip:hover {
+  background-color: #444;
+}
+
+.dinner-recipes-filter-chip.selected {
+  background-color: #ffeded;
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-filter-chip.selected {
+  background-color: rgba(255, 107, 107, 0.2);
+  color: #ff8a8a;
+  border-color: #ff8a8a;
+}
+
+.dinner-recipes-sort-select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 0.9rem;
+  color: #333;
+  outline: none;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-sort-select {
+  background-color: #333;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+/* Action Buttons */
+.dinner-recipes-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.dinner-recipes-add-button,
+.dinner-recipes-inventory-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-add-button,
+.dinner-recipes-container.dark-mode .dinner-recipes-inventory-button {
+  background-color: #ff8a8a;
+  box-shadow: 0 2px 8px rgba(255, 138, 138, 0.4);
+}
+
+.dinner-recipes-inventory-button {
+  background-color: #4a6bff;
+  box-shadow: 0 2px 8px rgba(74, 107, 255, 0.4);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-inventory-button {
+  background-color: #6a8aff;
+  box-shadow: 0 2px 8px rgba(106, 138, 255, 0.4);
+}
+
+.dinner-recipes-add-button:hover,
+.dinner-recipes-inventory-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Recipe Cards */
+.dinner-recipes-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dinner-recipes-card-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.dinner-recipes-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.dinner-recipes-card:hover .dinner-recipes-card-image img {
+  transform: scale(1.05);
+}
+
+.dinner-recipes-card-time-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dinner-recipes-card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #4a6bff;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+}
+
+.dinner-recipes-card-content {
+  padding: 1.2rem;
+}
+
+.dinner-recipes-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.dinner-recipes-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.dinner-recipes-card-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-card-time {
+  color: #aaa;
+}
+
+.dinner-recipes-card-veg {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.dinner-recipes-card-cuisine {
+  background-color: #ff9800;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.dinner-recipes-card-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-card-description {
+  color: #aaa;
+}
+
+.dinner-recipes-card-ingredients {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-card-ingredients {
+  color: #aaa;
+}
+
+.dinner-recipes-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem 1rem;
+}
+
+.dinner-recipes-card-action-button {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-card-action-button {
+  color: #aaa;
+}
+
+.dinner-recipes-card-action-button:hover {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+.dinner-recipes-heart-filled {
+  color: #ff6b6b;
+}
+
+.dinner-recipes-bookmark-filled {
+  color: #4a6bff;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-heart-filled {
+  color: #ff8a8a;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-bookmark-filled {
+  color: #6a8aff;
+}
+
+/* Grid Layout */
+.dinner-recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Slider Sections */
+.dinner-recipes-matching-container,
+.dinner-recipes-quick-container {
+  padding: 1rem 0 2rem;
+}
+
+.dinner-recipes-matching-swiper,
+.dinner-recipes-quick-container {
+  margin: 0 -0.75rem;
+  padding: 0.5rem 0.75rem 2rem;
+}
+
+.dinner-recipes-quick-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+/* Empty States */
+.dinner-recipes-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-empty-state {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.dinner-recipes-action-button {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-action-button {
+  background-color: #ff8a8a;
+}
+
+/* Loading State */
+.dinner-recipes-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.dinner-recipes-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #ff6b6b;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #ff8a8a;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal */
+.dinner-recipes-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.dinner-recipes-modal {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-modal {
+  background-color: #2a2a2a;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dinner-recipes-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-header {
+  border-color: #444;
+}
+
+.dinner-recipes-modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: inherit;
+  margin: 0;
+}
+
+.dinner-recipes-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-close {
+  color: #aaa;
+}
+
+.dinner-recipes-modal-content,
+.dinner-recipes-modal-body {
+  padding: 1.5rem;
+}
+
+.dinner-recipes-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-footer {
+  border-color: #444;
+}
+
+.dinner-recipes-modal-cancel,
+.dinner-recipes-modal-close-btn {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-cancel,
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-close-btn {
+  background-color: #444;
+  color: #e0e0e0;
+}
+
+.dinner-recipes-modal-save {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-save {
+  background-color: #ff8a8a;
+}
+
+/* Form Elements */
+.dinner-recipes-form-group {
+  margin-bottom: 1.2rem;
+}
+
+.dinner-recipes-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.dinner-recipes-form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: inherit;
+}
+
+.dinner-recipes-form-input,
+.dinner-recipes-form-select,
+.dinner-recipes-form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 0.9rem;
+  color: #333;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-form-input,
+.dinner-recipes-container.dark-mode .dinner-recipes-form-select,
+.dinner-recipes-container.dark-mode .dinner-recipes-form-textarea {
+  background-color: #333;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+.dinner-recipes-form-input:focus,
+.dinner-recipes-form-select:focus,
+.dinner-recipes-form-textarea:focus {
+  border-color: #4a6bff;
+  box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+}
+
+.dinner-recipes-form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.dinner-recipes-form-input-group {
+  margin-bottom: 0.5rem;
+}
+
+.dinner-recipes-form-add-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: 1px dashed #aaa;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: #666;
+  font-size: 0.9rem;
+  width: 100%;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-form-add-button {
+  border-color: #666;
+  color: #aaa;
+}
+
+.dinner-recipes-form-add-button:hover {
+  border-color: #4a6bff;
+  color: #4a6bff;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-form-add-button:hover {
+  border-color: #6a8aff;
+  color: #6a8aff;
+}
+
+.dinner-recipes-form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.dinner-recipes-form-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff6b6b;
+}
+
+.dinner-recipes-container.dark-mode
+  .dinner-recipes-form-checkbox
+  input[type="checkbox"] {
+  accent-color: #ff8a8a;
+}
+
+/* Inventory Modal */
+.dinner-recipes-inventory-modal {
+  max-width: 800px;
+}
+
+.dinner-recipes-inventory-add {
+  margin-bottom: 2rem;
+}
+
+.dinner-recipes-inventory-add h3,
+.dinner-recipes-inventory-list h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
+.dinner-recipes-add-ingredient-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-add-ingredient-btn {
+  background-color: #5ac25e;
+}
+
+.dinner-recipes-inventory-table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-inventory-table {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dinner-recipes-inventory-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 0.5fr;
+  background-color: #f5f5f5;
+  font-weight: 600;
+  padding: 1rem;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-inventory-header {
+  background-color: #333;
+}
+
+.dinner-recipes-inventory-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 0.5fr;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-inventory-row {
+  border-color: #444;
+}
+
+.dinner-recipes-inventory-row:hover {
+  background-color: #f9f9f9;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-inventory-row:hover {
+  background-color: #2f2f2f;
+}
+
+.dinner-recipes-category-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.dinner-recipes-category-vegetable {
+  background-color: #4caf50;
+}
+
+.dinner-recipes-category-fruit {
+  background-color: #ff9800;
+}
+
+.dinner-recipes-category-meat {
+  background-color: #f44336;
+}
+
+.dinner-recipes-category-dairy {
+  background-color: #2196f3;
+}
+
+.dinner-recipes-category-grain {
+  background-color: #ffc107;
+}
+
+.dinner-recipes-category-spice {
+  background-color: #9c27b0;
+}
+
+.dinner-recipes-category-other {
+  background-color: #607d8b;
+}
+
+.dinner-recipes-inventory-delete-btn {
+  background: none;
+  border: none;
+  color: #f44336;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dinner-recipes-inventory-delete-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Empty inventory styling */
+.dinner-recipes-empty-inventory {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border: 1px dashed #ddd;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-empty-inventory {
+  color: #aaa;
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+/* Category badges */
+.dinner-recipes-category-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.dinner-recipes-category-vegetable {
+  background-color: #e3f5e1;
+  color: #2e7d32;
+}
+
+.dinner-recipes-category-fruit {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.dinner-recipes-category-meat {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.dinner-recipes-category-dairy {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+}
+
+.dinner-recipes-category-grain {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+.dinner-recipes-category-spice {
+  background-color: #e0f7fa;
+  color: #00838f;
+}
+
+.dinner-recipes-category-other {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-vegetable {
+  background-color: rgba(46, 125, 50, 0.2);
+  color: #81c784;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-fruit {
+  background-color: rgba(230, 81, 0, 0.2);
+  color: #ffb74d;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-meat {
+  background-color: rgba(198, 40, 40, 0.2);
+  color: #ef9a9a;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-dairy {
+  background-color: rgba(27, 94, 32, 0.2);
+  color: #a5d6a7;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-grain {
+  background-color: rgba(245, 127, 23, 0.2);
+  color: #ffe082;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-spice {
+  background-color: rgba(0, 131, 143, 0.2);
+  color: #80deea;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-category-other {
+  background-color: rgba(106, 27, 154, 0.2);
+  color: #ce93d8;
+}
+
+/* Loading spinner */
+.dinner-recipes-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.dinner-recipes-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: dinner-recipes-spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #3498db;
+}
+
+@keyframes dinner-recipes-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Form elements styling for consistency */
+.dinner-recipes-form-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+
+.dinner-recipes-form-textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-form-textarea {
+  background-color: #333;
+  border-color: #555;
+  color: #ddd;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-form-textarea:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.4);
+}
+
+/* Heart and bookmark filled states */
+.dinner-recipes-heart-filled {
+  color: #e74c3c;
+}
+
+.dinner-recipes-bookmark-filled {
+  color: #f39c12;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-heart-filled {
+  color: #ff6b6b;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-bookmark-filled {
+  color: #ffc53d;
+}
+
+/* Typography responsiveness */
+.dinner-recipes-title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.dinner-recipes-subtitle {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  opacity: 0.85;
+}
+
+.dinner-recipes-section-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 0.75rem;
+}
+
+.dinner-recipes-section-description {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  margin-bottom: 1.5rem;
+  opacity: 0.85;
+}
+
+.dinner-recipes-card-title {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .dinner-recipes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .dinner-recipes-quick-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .dinner-recipes-modal {
+    width: 90%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dinner-recipes-hero {
+    padding: 1.5rem;
+  }
+
+  .dinner-recipes-search-bar {
+    flex-direction: column;
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+
+  .dinner-recipes-search-input {
+    width: 100%;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .dinner-recipes-filter-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .dinner-recipes-container.dark-mode .dinner-recipes-filter-button {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .dinner-recipes-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .dinner-recipes-add-button,
+  .dinner-recipes-inventory-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+
+  .dinner-recipes-form-row {
+    flex-direction: column;
+  }
+
+  .dinner-recipes-form-group {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .dinner-recipes-inventory-header,
+  .dinner-recipes-inventory-row {
+    grid-template-columns: 1.5fr 1fr 1fr 0.5fr;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .dinner-recipes-modal-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dinner-recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dinner-recipes-quick-container {
+    grid-template-columns: 1fr;
+  }
+
+  .dinner-recipes-card-image {
+    height: 180px;
+  }
+
+  .dinner-recipes-inventory-header,
+  .dinner-recipes-inventory-row {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0.5rem;
+  }
+
+  .dinner-recipes-inventory-col:nth-child(1) {
+    grid-column: 1 / 2;
+  }
+
+  .dinner-recipes-inventory-col:nth-child(2) {
+    grid-column: 2 / 3;
+    text-align: right;
+  }
+
+  .dinner-recipes-inventory-col:nth-child(3) {
+    grid-column: 1 / 2;
+  }
+
+  .dinner-recipes-inventory-col:nth-child(4) {
+    grid-column: 2 / 3;
+    text-align: right;
+  }
+
+  .dinner-recipes-filter-section {
+    padding: 0.75rem;
+  }
+
+  .dinner-recipes-filter-chips {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dinner-recipes-filter-chip {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .dinner-recipes-modal {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .dinner-recipes-modal-header {
+    padding-bottom: 0.75rem;
+  }
+
+  .dinner-recipes-modal-header h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Accessibility improvements */
+.dinner-recipes-card:focus-within {
+  outline: 2px solid #3498db;
+}
+
+.dinner-recipes-container.dark-mode .dinner-recipes-card:focus-within {
+  outline-color: #5dade2;
+}
+
+/* Ensure buttons have sufficient contrast */
+.dinner-recipes-container.dark-mode .dinner-recipes-action-button,
+.dinner-recipes-container.dark-mode .dinner-recipes-form-add-button,
+.dinner-recipes-container.dark-mode .dinner-recipes-modal-save {
+  background-color: #2980b9;
+  color: #fff;
+}
+
+/* Touch target size improvements for mobile */
+@media (max-width: 576px) {
+  .dinner-recipes-card-action-button {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0.5rem;
+  }
+
+  .dinner-recipes-form-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  .dinner-recipes-form-checkbox label {
+    padding-left: 0.5rem;
+  }
+}
+
+/* Font size adjustments for better readability on small screens */
+@media (max-width: 375px) {
+  .dinner-recipes-title {
+    font-size: 1.5rem;
+  }
+
+  .dinner-recipes-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .dinner-recipes-section-title {
+    font-size: 1.25rem;
+  }
+
+  .dinner-recipes-card-title {
+    font-size: 1rem;
+  }
+
+  .dinner-recipes-card-description {
+    font-size: 0.8rem;
+  }
+}
+
+/* Print styles for recipes */
+@media print {
+  .dinner-recipes-container {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+
+  .dinner-recipes-search-bar,
+  .dinner-recipes-actions,
+  .dinner-recipes-card-actions,
+  .dinner-recipes-filter-button,
+  .dinner-recipes-filters {
+    display: none !important;
+  }
+
+  .dinner-recipes-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+
+  .dinner-recipes-modal-overlay {
+    position: relative !important;
+    background-color: #fff !important;
+  }
+
+  .dinner-recipes-modal {
+    position: relative !important;
+    box-shadow: none !important;
+    max-height: none !important;
+    transform: none !important;
+  }
+}

@@ -8,7 +8,7 @@ const RecipeNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
-    const [user, setUser] = useState({ post: [] });
+    const [user, setUser] = useState({});
 
     const UserDetails = async () => {
         try {
@@ -119,10 +119,10 @@ const RecipeNavbar = () => {
     // Recipe categories for dropdown
     const recipeCategories = [
         { name: 'Breakfast', path: '/recipes/breakfast' },
-        { name: 'Lunch', path: '/recipes/lunch' },
-        { name: 'Dinner', path: '/recipes/dinner' },
-        { name: 'Desserts', path: '/recipes/desserts' },
-        { name: 'Vegetarian', path: '/recipes/vegetarian' }
+        { name: 'Lunch', path: '/LunchRecipies' },
+        { name: 'Dinner', path: '/DinnerRecipies' },
+        { name: 'Desserts', path: '/desserts' },
+        { name: 'Vegetarian', path: '/vegetarian' }
     ];
 
     // Profile options for dropdown
@@ -163,6 +163,10 @@ const RecipeNavbar = () => {
         }
 
     };
+
+    if (user.userType == "Admin") {
+        return ("")
+    }
 
     return (
         <nav
@@ -224,84 +228,103 @@ const RecipeNavbar = () => {
                     </a>
 
                     {
-                        !user ? ("") : ((<div className="recipe-nav-dropdown-container">
-                            <button
-                                className="recipe-nav-link recipe-nav-dropdown-toggle"
-                                onClick={() => toggleDropdown('profile')}
-                            >
-                                <FiUser />
-                                <span>Profile</span>
-                                {activeDropdown === 'profile' ? <FiChevronUp /> : <FiChevronDown />}
-                            </button>
-                            <AnimatePresence>
-                                {activeDropdown === 'profile' && (
-                                    <motion.div
-                                        className="recipe-nav-dropdown-menu"
-                                        initial="closed"
-                                        animate="open"
-                                        exit="closed"
-                                        variants={dropdownVariants}
+                        user && Object.keys(user).length > 0 ? (
+                            <>
+                                <div className="recipe-nav-dropdown-container">
+                                    <button
+                                        className="recipe-nav-link recipe-nav-dropdown-toggle"
+                                        onClick={() => toggleDropdown('profile')}
                                     >
-                                        {profileOptions.map((option) => (
-                                            <a
-                                                key={option.name}
-                                                href={option.path}
-                                                className="recipe-nav-dropdown-item"
+                                        <FiUser />
+                                        <span>Profile</span>
+                                        {activeDropdown === 'profile' ? <FiChevronUp /> : <FiChevronDown />}
+                                    </button>
+                                    <AnimatePresence>
+                                        {activeDropdown === 'profile' && (
+                                            <motion.div
+                                                className="recipe-nav-dropdown-menu"
+                                                initial="closed"
+                                                animate="open"
+                                                exit="closed"
+                                                variants={dropdownVariants}
                                             >
-                                                {option.name}
-                                            </a>
-                                        ))}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>))
-                    }
-{
-    user ? (
-                    <div className="recipe-nav-dropdown-container">
-                        <button
-                            className="recipe-nav-link recipe-nav-dropdown-toggle"
-                            onClick={() => toggleDropdown('auth')}
-                        >
-                            <FiUser />
-                            <span>User</span>
-                            {activeDropdown === 'auth' ? <FiChevronUp /> : <FiChevronDown />}
-                        </button>
-                        <AnimatePresence>
-                            {activeDropdown === 'auth' && (
-                                <motion.div
-                                    className="recipe-nav-dropdown-menu"
-                                    initial="closed"
-                                    animate="open"
-                                    exit="closed"
-                                    variants={dropdownVariants}
-                                >
-                                    {authOptions.map((option) => (
-                                        <a
-                                            key={option.name}
-                                            href={option.path}
-                                            className="recipe-nav-dropdown-item"
-                                        >
-                                            {option.name}
-                                        </a>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>) : ("")
-}
+                                                {profileOptions.map((option) => (
+                                                    <a
+                                                        key={option.name}
+                                                        href={option.path}
+                                                        className="recipe-nav-dropdown-item"
+                                                    >
+                                                        {option.name}
+                                                    </a>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </>) : (<>
+
+
+                            </>)}
 
 
 
-{
-    user ? (
-        <a onClick={handleLogout} className="recipe-nav-link" style={{ cursor: "pointer" }}>
-            <FiLogOut />
-            <span>Logout</span>
-        </a>
-    ) : null // Return null instead of an empty string
-}
-                   
+
+
+                    {
+                        user && Object.keys(user).length > 0 ? (
+                            <>
+
+                            </>) : (<>
+                                <div className="recipe-nav-dropdown-container">
+                                    <button
+                                        className="recipe-nav-link recipe-nav-dropdown-toggle"
+                                        onClick={() => toggleDropdown('auth')}
+                                    >
+                                        <FiUser />
+                                        <span>User</span>
+                                        {activeDropdown === 'auth' ? <FiChevronUp /> : <FiChevronDown />}
+                                    </button>
+                                    <AnimatePresence>
+                                        {activeDropdown === 'auth' && (
+                                            <motion.div
+                                                className="recipe-nav-dropdown-menu"
+                                                initial="closed"
+                                                animate="open"
+                                                exit="closed"
+                                                variants={dropdownVariants}
+                                            >
+                                                {authOptions.map((option) => (
+                                                    <a
+                                                        key={option.name}
+                                                        href={option.path}
+                                                        className="recipe-nav-dropdown-item"
+                                                    >
+                                                        {option.name}
+                                                    </a>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+
+                            </>)}
+
+
+                    {
+                        user && Object.keys(user).length > 0 ? (
+                            <>
+                                <a onClick={handleLogout} className="recipe-nav-link" style={{ cursor: "pointer" }}>
+                                    <FiLogOut />
+                                    <span>Logout</span>
+                                </a>
+                            </>) : (<>
+
+
+                            </>)}
+
+
+
+
                 </div>
 
 

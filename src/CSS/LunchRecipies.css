@@ -1,0 +1,1081 @@
+/* LunchRecipes.css */
+.lunch-recipes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: "Poppins", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme Variations */
+.lunch-recipes-container.lunch-light {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.lunch-recipes-container.lunch-dark {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.lunch-dark .lunch-section-title,
+.lunch-dark .lunch-page-title {
+  color: #ffffff;
+}
+
+.lunch-dark .lunch-recipe-card,
+.lunch-dark .lunch-featured-card,
+.lunch-dark .lunch-tip-card,
+.lunch-dark .lunch-combination-card,
+.lunch-dark .lunch-nutrition-card,
+.lunch-dark .lunch-modal,
+.lunch-dark .lunch-faq-item {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.lunch-dark .lunch-search-input,
+.lunch-dark .lunch-form-input,
+.lunch-dark .lunch-form-select {
+  background-color: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+.lunch-dark .lunch-newsletter-container {
+  background-color: #333;
+}
+
+/* Header Section */
+.lunch-header-section {
+  background: linear-gradient(135deg, #ff9966, #ff5e62);
+  color: white;
+  padding: 3rem 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px rgba(255, 94, 98, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 200px;
+}
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.spinner-circle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ff6b6b;
+  animation: spinner-animation 1.2s linear infinite;
+}
+
+.spinner-circle:nth-child(1) {
+  top: 0;
+  left: 0;
+  animation-delay: 0s;
+}
+
+.spinner-circle:nth-child(2) {
+  top: 0;
+  right: 0;
+  animation-delay: 0.3s;
+}
+
+.spinner-circle:nth-child(3) {
+  bottom: 0;
+  right: 0;
+  animation-delay: 0.6s;
+}
+
+.spinner-circle:nth-child(4) {
+  bottom: 0;
+  left: 0;
+  animation-delay: 0.9s;
+}
+
+@keyframes spinner-animation {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+}
+
+/* Dark mode styles */
+.lunch-dark .spinner-circle {
+  background-color: #ff8a8a;
+}
+
+.lunch-header-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTAgMCBMNDAgNDAgTDQwIDAgWiIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjxwYXRoIGQ9Ik0wIDQwIEw0MCAwIEw4MCAwIEw0MCA0MCBaIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDMpIi8+PHBhdGggZD0iTTQwIDQwIEw4MCAwIEw4MCA0MCBaIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpIi8+PHBhdGggZD0iTTQwIDQwIEw4MCA0MCBMODE2MCAxMjAgTDEyMCAxMjAgTDQwIDQwIFoiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMykiLz48cGF0aCBkPSJNMTIwIDEyMCBMMTYwIDEyMCBMMTYwIDE2MCBMMTIwIDE2MCBaIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpIi8+PC9zdmc+");
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.lunch-header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.lunch-page-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.lunch-page-subtitle {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Section Styling */
+.lunch-section-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.lunch-section-description {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #666;
+  max-width: 800px;
+}
+
+.lunch-dark .lunch-section-description {
+  color: #aaa;
+}
+
+.lunch-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Recipe Cards */
+.lunch-recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.lunch-recipe-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lunch-recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.lunch-recipe-card-image-container {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.lunch-recipe-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.lunch-recipe-card:hover .lunch-recipe-card-image {
+  transform: scale(1.05);
+}
+
+.lunch-recipe-card-content {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.lunch-recipe-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.lunch-recipe-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.lunch-dark .lunch-recipe-card-meta {
+  color: #aaa;
+}
+
+.lunch-recipe-card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.lunch-recipe-card-meta-icon {
+  color: #ff5e62;
+}
+
+.lunch-recipe-card-actions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.lunch-recipe-card-action-btn {
+  background-color: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  color: #666;
+  font-size: 1rem;
+}
+
+.lunch-dark .lunch-recipe-card-action-btn {
+  background-color: rgba(50, 50, 50, 0.85);
+  color: #ddd;
+}
+
+.lunch-recipe-card-action-btn:hover {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+.lunch-dark .lunch-recipe-card-action-btn:hover {
+  background-color: #444;
+}
+
+.lunch-liked,
+.lunch-saved {
+  color: #ff5e62;
+}
+
+.lunch-likes-count {
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+}
+
+.lunch-veg-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background-color: rgba(39, 174, 96, 0.9);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.lunch-view-recipe-btn {
+  margin-top: auto;
+  background-color: #ff5e62;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.lunch-view-recipe-btn:hover {
+  background-color: #ff4954;
+}
+
+/* Admin Actions */
+.lunch-admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.lunch-admin-action-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lunch-edit-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.lunch-edit-btn:hover {
+  background-color: #2980b9;
+}
+
+.lunch-delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.lunch-delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Featured Section */
+.lunch-featured-section {
+  margin: 3rem 0;
+}
+
+.lunch-featured-carousel {
+  margin-top: 1.5rem;
+}
+
+/* Featured Section (continuing from where your CSS left off) */
+.lunch-featured-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lunch-dark .lunch-featured-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.lunch-featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lunch-featured-img-container {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.lunch-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.lunch-featured-card:hover .lunch-featured-img {
+  transform: scale(1.05);
+}
+
+.lunch-featured-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.lunch-featured-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.lunch-dark .lunch-featured-title {
+  color: #f1f1f1;
+}
+
+.lunch-featured-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.lunch-dark .lunch-featured-meta {
+  color: #aaa;
+}
+
+.lunch-featured-btn {
+  margin-top: auto;
+  padding: 0.6rem 1rem;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lunch-featured-btn:hover {
+  background-color: #ff5252;
+}
+
+/* FAQ Section */
+.lunch-faq-section {
+  margin: 4rem 0;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+}
+
+.lunch-dark .lunch-faq-section {
+  background-color: #222;
+}
+
+.lunch-faq-container {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.lunch-faq-item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lunch-dark .lunch-faq-item {
+  background-color: #2a2a2a;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.lunch-faq-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lunch-dark .lunch-faq-item:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.lunch-faq-question {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.lunch-dark .lunch-faq-question {
+  color: #f1f1f1;
+}
+
+.lunch-faq-question::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #ff6b6b;
+}
+
+.lunch-faq-answer {
+  color: #666;
+  line-height: 1.6;
+}
+
+.lunch-dark .lunch-faq-answer {
+  color: #ccc;
+}
+
+/* Nutrition Facts Section */
+.lunch-nutrition-section {
+  margin: 4rem 0;
+}
+
+.lunch-nutrition-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.lunch-nutrition-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.lunch-dark .lunch-nutrition-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+}
+
+.lunch-nutrition-card:hover {
+  transform: translateY(-5px);
+}
+
+.lunch-nutrition-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ff6b6b;
+  display: inline-block;
+}
+
+.lunch-dark .lunch-nutrition-title {
+  color: #f1f1f1;
+}
+
+.lunch-nutrition-text {
+  color: #555;
+  line-height: 1.6;
+}
+
+.lunch-dark .lunch-nutrition-text {
+  color: #ccc;
+}
+
+.lunch-nutrition-list {
+  margin-top: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.lunch-nutrition-list li {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.lunch-nutrition-list li::before {
+  content: "•";
+  position: absolute;
+  left: -1rem;
+  color: #ff6b6b;
+}
+
+/* Newsletter Section */
+.lunch-newsletter-section {
+  margin: 4rem 0;
+  background-color: #f5f5f5;
+  padding: 3rem 0;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lunch-dark .lunch-newsletter-section {
+  background-color: #222;
+}
+
+.lunch-newsletter-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.1) 0%,
+    transparent 50%
+  );
+}
+
+.lunch-newsletter-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.lunch-newsletter-content {
+  text-align: center;
+}
+
+.lunch-newsletter-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.lunch-dark .lunch-newsletter-title {
+  color: #f1f1f1;
+}
+
+.lunch-newsletter-text {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.lunch-dark .lunch-newsletter-text {
+  color: #ccc;
+}
+
+.lunch-newsletter-form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.lunch-newsletter-input {
+  flex: 1;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 6px 0 0 6px;
+  font-size: 1rem;
+  background-color: white;
+  color: #333;
+  transition: border-color 0.2s ease;
+}
+
+.lunch-dark .lunch-newsletter-input {
+  background-color: #333;
+  border-color: #444;
+  color: #f1f1f1;
+}
+
+.lunch-newsletter-input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+}
+
+.lunch-newsletter-btn {
+  padding: 0.875rem 1.5rem;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lunch-newsletter-btn:hover {
+  background-color: #ff5252;
+}
+
+.lunch-newsletter-disclaimer {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.lunch-dark .lunch-newsletter-disclaimer {
+  color: #999;
+}
+
+/* Related Links Section */
+.lunch-related-links-section {
+  margin: 4rem 0;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.lunch-dark .lunch-related-links-section {
+  background-color: #222;
+}
+
+.lunch-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.lunch-related-link {
+  padding: 0.75rem 1.25rem;
+  background-color: white;
+  color: #ff6b6b;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 500;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.lunch-dark .lunch-related-link {
+  background-color: #2a2a2a;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.lunch-related-link:hover {
+  background-color: #ff6b6b;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Popular Combinations Section */
+.lunch-popular-section {
+  margin: 4rem 0;
+}
+
+.lunch-popular-combinations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.lunch-combination-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lunch-dark .lunch-combination-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+}
+
+.lunch-combination-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.lunch-dark .lunch-combination-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lunch-combination-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ff6b6b;
+}
+
+.lunch-dark .lunch-combination-title {
+  color: #f1f1f1;
+}
+
+.lunch-combination-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lunch-combination-items li {
+  padding: 0.5rem 0;
+  color: #555;
+  border-bottom: 1px dashed #eee;
+  display: flex;
+  align-items: center;
+}
+
+.lunch-dark .lunch-combination-items li {
+  color: #ccc;
+  border-bottom-color: #333;
+}
+
+.lunch-combination-items li:last-child {
+  border-bottom: none;
+}
+
+.lunch-combination-items li::before {
+  content: "✓";
+  margin-right: 0.75rem;
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+/* Tips Section */
+.lunch-tips-section {
+  margin: 4rem 0;
+  padding: 2rem 0;
+}
+
+.lunch-tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.lunch-tip-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.75rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  border-top: 4px solid #ff6b6b;
+}
+
+.lunch-dark .lunch-tip-card {
+  background-color: #2a2a2a;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+}
+
+.lunch-tip-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.lunch-dark .lunch-tip-title {
+  color: #f1f1f1;
+}
+
+.lunch-tip-text {
+  color: #555;
+  line-height: 1.6;
+}
+
+.lunch-dark .lunch-tip-text {
+  color: #ccc;
+}
+
+/* Modal Styles */
+.lunch-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.lunch-modal {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.lunch-dark .lunch-modal {
+  background-color: #1e1e1e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.lunch-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.lunch-dark .lunch-modal-title {
+  color: #f1f1f1;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .lunch-header-content {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  .lunch-page-title {
+    font-size: 2.2rem;
+  }
+
+  .lunch-nutrition-cards,
+  .lunch-popular-combinations,
+  .lunch-tips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lunch-recipes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .lunch-page-title {
+    font-size: 1.8rem;
+  }
+
+  .lunch-page-subtitle {
+    font-size: 1rem;
+  }
+
+  .lunch-section-title {
+    font-size: 1.5rem;
+  }
+
+  .lunch-nutrition-cards,
+  .lunch-popular-combinations,
+  .lunch-tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lunch-recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lunch-newsletter-form {
+    flex-direction: column;
+  }
+
+  .lunch-newsletter-input {
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+
+  .lunch-newsletter-btn {
+    border-radius: 6px;
+  }
+
+  .lunch-related-link {
+    width: 100%;
+  }
+
+  .lunch-faq-question {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .lunch-page-title {
+    font-size: 1.6rem;
+  }
+
+  .lunch-header-section {
+    padding: 2rem 1rem;
+  }
+
+  .lunch-search-filter-section {
+    flex-direction: column;
+  }
+
+  .lunch-search-box {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .lunch-filter-container {
+    width: 100%;
+  }
+
+  .lunch-modal {
+    padding: 1.5rem;
+  }
+
+  .lunch-form-list-input-group {
+    flex-direction: column;
+  }
+
+  .lunch-form-add-btn {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply animations */
+.lunch-featured-btn,
+.lunch-view-recipe-btn,
+.lunch-newsletter-btn {
+  animation: pulse 2s infinite;
+}
+
+.lunch-featured-section,
+.lunch-nutrition-section,
+.lunch-faq-section,
+.lunch-popular-section,
+.lunch-tips-section,
+.lunch-newsletter-section {
+  animation: fadeIn 1s ease-in-out;
+}

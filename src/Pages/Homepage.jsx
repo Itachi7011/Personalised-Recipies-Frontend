@@ -15,6 +15,41 @@ const HomePage = () => {
     const [dietPreference, setDietPreference] = useState('veg'); // 'veg', 'non-veg', 'both'
     const [activeTab, setActiveTab] = useState({});
 
+    const [savedRecipes, setSavedRecipes] = useState([]);
+    const [likedRecipes, setLikedRecipes] = useState([]);
+
+    const [user, setUser] = useState({});
+
+    const UserDetails = async () => {
+        try {
+            const res = await fetch("/api/userProfile", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+
+            // Check if the response is successful
+            if (!res.ok) {
+                throw new Error(`Error during retrieve data - ${res.statusText}`);
+            }
+
+            // Log response for debugging
+            const data = await res.json();
+            console.log("Fetched user data:", data);
+
+            setUser(data);
+        } catch (err) {
+            console.error("Error fetching user data:", err);
+        }
+    };
+
+    useEffect(() => {
+        UserDetails();
+    }, []);
+
     const API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY || 'YOUR_FREE_API_KEY';
     console.log(API_KEY)
     // Function to handle Get Started button click
@@ -321,6 +356,167 @@ const HomePage = () => {
             }
         }
     };
+
+    const handleSaveRecipe = async (recipe, index) => {
+        if (!user || Object.keys(user).length === 0) {
+            Swal.fire({
+                title: 'Login Required',
+                text: 'You must be logged in to save recipes',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Login',
+                cancelButtonText: 'Cancel',
+                background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                color: isDarkMode ? '#ffffff' : '#333333',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Login';
+                }
+            });
+            return;
+        }
+
+        // Check if recipe is already saved
+        const isAlreadySaved = savedRecipes.includes(index);
+
+        if (isAlreadySaved) {
+            // Show confirmation dialog for unsaving
+            const result = await Swal.fire({
+                title: 'Unsave Recipe?',
+                text: 'Do you want to remove this recipe from your saved collection?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, unsave it',
+                cancelButtonText: 'No, keep it',
+                background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                color: isDarkMode ? '#ffffff' : '#333333',
+            });
+
+            if (!result.isConfirmed) {
+                return; // User cancelled the unsave action
+            }
+        }
+
+        try {
+            const response = await fetch('/api/save-recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    recipeData: recipe,
+                    email: user.email,
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.action === 'saved') {
+                    Swal.fire({
+                        title: 'Saved!',
+                        text: 'Recipe has been saved to your collection',
+                        icon: 'success',
+                        background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                        color: isDarkMode ? '#ffffff' : '#333333',
+                    });
+                    setSavedRecipes([...savedRecipes, index]);
+                } else {
+                    Swal.fire({
+                        title: 'Unsaved!',
+                        text: 'Recipe has been removed from your collection',
+                        icon: 'success',
+                        background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                        color: isDarkMode ? '#ffffff' : '#333333',
+                    });
+                    setSavedRecipes(savedRecipes.filter(i => i !== index));
+                }
+            }
+        } catch (error) {
+            console.error('Error saving recipe:', error);
+        }
+    };
+
+    const handleLikeRecipe = async (recipe, index) => {
+        if (!user || Object.keys(user).length === 0) {
+            Swal.fire({
+                title: 'Login Required',
+                text: 'You must be logged in to like recipes',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Login',
+                cancelButtonText: 'Cancel',
+                background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                color: isDarkMode ? '#ffffff' : '#333333',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Login';
+                }
+            });
+            return;
+        }
+    
+        // Check if recipe is already liked
+        const isAlreadyLiked = likedRecipes.includes(index);
+    
+        if (isAlreadyLiked) {
+            // Show confirmation dialog for unliking
+            const result = await Swal.fire({
+                title: 'Unlike Recipe?',
+                text: 'Do you want to remove this recipe from your liked recipes?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, unlike it',
+                cancelButtonText: 'No, keep it',
+                background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                color: isDarkMode ? '#ffffff' : '#333333',
+            });
+    
+            if (!result.isConfirmed) {
+                return; // User cancelled the unlike action
+            }
+        }
+    
+        try {
+            const response = await fetch('/api/like-recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    recipeData: recipe,
+                    email: user.email,
+                    action: isAlreadyLiked ? 'unlike' : 'like'
+                })
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                if (data.action === 'liked') {
+                    Swal.fire({
+                        title: 'Liked!',
+                        text: 'Recipe has been added to your favorites',
+                        icon: 'success',
+                        background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                        color: isDarkMode ? '#ffffff' : '#333333',
+                    });
+                    setLikedRecipes([...likedRecipes, index]);
+                } else {
+                    Swal.fire({
+                        title: 'Unliked!',
+                        text: 'Recipe has been removed from your favorites',
+                        icon: 'success',
+                        background: isDarkMode ? '#1e1e1e' : '#ffffff',
+                        color: isDarkMode ? '#ffffff' : '#333333',
+                    });
+                    setLikedRecipes(likedRecipes.filter(i => i !== index));
+                }
+            }
+        } catch (error) {
+            console.error('Error liking recipe:', error);
+        }
+    };
     return (
         <div className={`homepage-container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
             {/* Hero Section (existing code remains the same) */}
@@ -352,18 +548,36 @@ const HomePage = () => {
                         Get Started
                     </motion.button>
                 </div>
-                <div className="homepage-hero-image-container">
-                    <div className="homepage-3d-fridge" ref={fridgeRef}>
-                        <div className="fridge-door">
-                            <div className="fridge-handle"></div>
-                            <div className="fridge-contents">
-                                <div className="fridge-item" style={{ top: '20%', left: '30%' }}></div>
-                                <div className="fridge-item" style={{ top: '45%', left: '60%' }}></div>
-                                <div className="fridge-item" style={{ top: '70%', left: '40%' }}></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div className="recipe-app__hero-visual-container">
+  <div className="recipe-app__ingredient-orbits">
+    <div className="recipe-app__ai-core">
+      <div className="recipe-app__ai-pulse"></div>
+      <div className="recipe-app__ai-icon">AI</div>
+    </div>
+    <div className="recipe-app__orbit recipe-app__orbit--first">
+      <div className="recipe-app__ingredient recipe-app__ingredient--veg" data-name="Tomato"></div>
+      <div className="recipe-app__ingredient recipe-app__ingredient--protein" data-name="Chicken"></div>
+      <div className="recipe-app__ingredient recipe-app__ingredient--grain" data-name="Pasta"></div>
+    </div>
+    <div className="recipe-app__orbit recipe-app__orbit--second">
+      <div className="recipe-app__ingredient recipe-app__ingredient--dairy" data-name="Cheese"></div>
+      <div className="recipe-app__ingredient recipe-app__ingredient--spice" data-name="Basil"></div>
+      <div className="recipe-app__ingredient recipe-app__ingredient--fruit" data-name="Lemon"></div>
+      <div className="recipe-app__ingredient recipe-app__ingredient--oil" data-name="Olive Oil"></div>
+    </div>
+  </div>
+  <div className="recipe-app__recipe-cards">
+    <div className="recipe-app__recipe-card recipe-app__recipe-card--pasta">
+      <div className="recipe-app__recipe-card-title">Pasta Primavera</div>
+    </div>
+    <div className="recipe-app__recipe-card recipe-app__recipe-card--curry">
+      <div className="recipe-app__recipe-card-title">Chicken Curry</div>
+    </div>
+    <div className="recipe-app__recipe-card recipe-app__recipe-card--salad">
+      <div className="recipe-app__recipe-card-title">Mediterranean Salad</div>
+    </div>
+  </div>
+</div>
             </section>
 
             {/* How It Works Section (existing code remains the same) */}
@@ -493,15 +707,33 @@ const HomePage = () => {
                                             }}
                                         />
                                         {recipe.video && (
-                                            <a href={recipe.video} target="_blank" rel="noopener" className="apt-recipe-video-btn">
-                                                <i className="fas fa-play-circle"></i>
-                                            </a>
-                                        )}
+    <a href={recipe.video} target="_blank" rel="noopener" className="apt-recipe-video-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+    </a>
+)}
                                     </div>
                                 )}
                                 <div className="apt-recipe-content">
                                     <h3 className="apt-recipe-title">{recipe.title}</h3>
-
+                                    <div className="apt-recipe-actions">
+                                        <button
+                                            className={`apt-recipe-action-btn ${savedRecipes.includes(index) ? 'saved' : ''}`}
+                                            onClick={() => handleSaveRecipe(recipe, index)}
+                                        >
+                                            <Book size={16} /> {savedRecipes.includes(index) ? 'Unsave' : 'Save'}
+                                        </button>
+                                        <button
+                                            className={`apt-recipe-action-btn ${likedRecipes.includes(index) ? 'liked' : ''}`}
+                                            onClick={() => handleLikeRecipe(recipe, index)}
+                                        >
+                                            <Heart size={16} fill={likedRecipes.includes(index) ? 'red' : 'none'} />
+                                            {likedRecipes.includes(index) ? 'Liked' : 'Like'}
+                                        </button>
+                                    </div>
                                     <div className="apt-recipe-meta">
                                         <span className="apt-recipe-time">
                                             <i className="far fa-clock"></i> {recipe.time}
