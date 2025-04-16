@@ -129,7 +129,6 @@ const RecipeNavbar = () => {
     const profileOptions = [
         { name: 'Account Settings', path: '/profile/settings' },
         { name: 'Saved Recipes', path: '/profile/saved' },
-        { name: 'Meal Planner', path: '/profile/planner' }
     ];
 
     const handleLogout = async () => {
@@ -222,7 +221,7 @@ const RecipeNavbar = () => {
                         </AnimatePresence>
                     </div>
 
-                    <a href="/search" className="recipe-nav-link">
+                    <a href="/SearchRecipies" className="recipe-nav-link">
                         <FiSearch />
                         <span>Search</span>
                     </a>
@@ -398,7 +397,7 @@ const RecipeNavbar = () => {
                                 </AnimatePresence>
                             </motion.div>
 
-                            <motion.a href="/search" className="recipe-nav-link-mobile" variants={itemVariants}>
+                            <motion.a href="/SearchRecipies" className="recipe-nav-link-mobile" variants={itemVariants}>
                                 <FiSearch />
                                 <span>Search Recipes</span>
                             </motion.a>

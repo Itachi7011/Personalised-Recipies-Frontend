@@ -455,10 +455,10 @@ const HomePage = () => {
             });
             return;
         }
-    
+
         // Check if recipe is already liked
         const isAlreadyLiked = likedRecipes.includes(index);
-    
+
         if (isAlreadyLiked) {
             // Show confirmation dialog for unliking
             const result = await Swal.fire({
@@ -471,12 +471,12 @@ const HomePage = () => {
                 background: isDarkMode ? '#1e1e1e' : '#ffffff',
                 color: isDarkMode ? '#ffffff' : '#333333',
             });
-    
+
             if (!result.isConfirmed) {
                 return; // User cancelled the unlike action
             }
         }
-    
+
         try {
             const response = await fetch('/api/like-recipe', {
                 method: 'POST',
@@ -490,7 +490,7 @@ const HomePage = () => {
                     action: isAlreadyLiked ? 'unlike' : 'like'
                 })
             });
-    
+
             if (response.ok) {
                 const data = await response.json();
                 if (data.action === 'liked') {
@@ -549,35 +549,35 @@ const HomePage = () => {
                     </motion.button>
                 </div>
                 <div className="recipe-app__hero-visual-container">
-  <div className="recipe-app__ingredient-orbits">
-    <div className="recipe-app__ai-core">
-      <div className="recipe-app__ai-pulse"></div>
-      <div className="recipe-app__ai-icon">AI</div>
-    </div>
-    <div className="recipe-app__orbit recipe-app__orbit--first">
-      <div className="recipe-app__ingredient recipe-app__ingredient--veg" data-name="Tomato"></div>
-      <div className="recipe-app__ingredient recipe-app__ingredient--protein" data-name="Chicken"></div>
-      <div className="recipe-app__ingredient recipe-app__ingredient--grain" data-name="Pasta"></div>
-    </div>
-    <div className="recipe-app__orbit recipe-app__orbit--second">
-      <div className="recipe-app__ingredient recipe-app__ingredient--dairy" data-name="Cheese"></div>
-      <div className="recipe-app__ingredient recipe-app__ingredient--spice" data-name="Basil"></div>
-      <div className="recipe-app__ingredient recipe-app__ingredient--fruit" data-name="Lemon"></div>
-      <div className="recipe-app__ingredient recipe-app__ingredient--oil" data-name="Olive Oil"></div>
-    </div>
-  </div>
-  <div className="recipe-app__recipe-cards">
-    <div className="recipe-app__recipe-card recipe-app__recipe-card--pasta">
-      <div className="recipe-app__recipe-card-title">Pasta Primavera</div>
-    </div>
-    <div className="recipe-app__recipe-card recipe-app__recipe-card--curry">
-      <div className="recipe-app__recipe-card-title">Chicken Curry</div>
-    </div>
-    <div className="recipe-app__recipe-card recipe-app__recipe-card--salad">
-      <div className="recipe-app__recipe-card-title">Mediterranean Salad</div>
-    </div>
-  </div>
-</div>
+                    <div className="recipe-app__ingredient-orbits">
+                        <div className="recipe-app__ai-core">
+                            <div className="recipe-app__ai-pulse"></div>
+                            <div className="recipe-app__ai-icon">AI</div>
+                        </div>
+                        <div className="recipe-app__orbit recipe-app__orbit--first">
+                            <div className="recipe-app__ingredient recipe-app__ingredient--veg" data-name="Tomato"></div>
+                            <div className="recipe-app__ingredient recipe-app__ingredient--protein" data-name="Chicken"></div>
+                            <div className="recipe-app__ingredient recipe-app__ingredient--grain" data-name="Pasta"></div>
+                        </div>
+                        <div className="recipe-app__orbit recipe-app__orbit--second">
+                            <div className="recipe-app__ingredient recipe-app__ingredient--dairy" data-name="Cheese"></div>
+                            <div className="recipe-app__ingredient recipe-app__ingredient--spice" data-name="Basil"></div>
+                            <div className="recipe-app__ingredient recipe-app__ingredient--fruit" data-name="Lemon"></div>
+                            <div className="recipe-app__ingredient recipe-app__ingredient--oil" data-name="Olive Oil"></div>
+                        </div>
+                    </div>
+                    <div className="recipe-app__recipe-cards">
+                        <div className="recipe-app__recipe-card recipe-app__recipe-card--pasta">
+                            <div className="recipe-app__recipe-card-title">Pasta Primavera</div>
+                        </div>
+                        <div className="recipe-app__recipe-card recipe-app__recipe-card--curry">
+                            <div className="recipe-app__recipe-card-title">Chicken Curry</div>
+                        </div>
+                        <div className="recipe-app__recipe-card recipe-app__recipe-card--salad">
+                            <div className="recipe-app__recipe-card-title">Mediterranean Salad</div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             {/* How It Works Section (existing code remains the same) */}
@@ -707,14 +707,14 @@ const HomePage = () => {
                                             }}
                                         />
                                         {recipe.video && (
-    <a href={recipe.video} target="_blank" rel="noopener" className="apt-recipe-video-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-        </svg>
-    </a>
-)}
+                                            <a href={recipe.video} target="_blank" rel="noopener" className="apt-recipe-video-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                                </svg>
+                                            </a>
+                                        )}
                                     </div>
                                 )}
                                 <div className="apt-recipe-content">

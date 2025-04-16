@@ -16,6 +16,7 @@ import './CSS/UserProfile.css';
 import './CSS/BreakfastRecipes.css';
 import './CSS/LunchRecipies.css';
 import './CSS/DinnerRecipies.css';
+import './CSS/SearchRecipies.css';
 
 import Navbar from "./Components/NavbarFooter/Navbar"
 import Footer from "./Components/NavbarFooter/Footer"
@@ -26,6 +27,7 @@ import UserProfile from "./Pages/Profile/UserProfile"
 import BreakfastRecipies from "./Pages/NavbarRecipiesPages/BreakfastRecipies"
 import LunchRecipies from "./Pages/NavbarRecipiesPages/LunchRecipies"
 import DinnerRecipies from "./Pages/NavbarRecipiesPages/DinnerRecipies"
+import SearchRecipies from "./Pages/SearchRecipies"
 
 
 function App() {
@@ -46,6 +48,7 @@ function App() {
           <Route path="/BreakfastRecipies" element={<BreakfastRecipies />} />
           <Route path="/LunchRecipies" element={<LunchRecipies />} />
           <Route path="/DinnerRecipies" element={<DinnerRecipies />} />
+          <Route path="/SearchRecipies" element={<SearchRecipies />} />
         </Routes>
         <Footer />
       </Router>
